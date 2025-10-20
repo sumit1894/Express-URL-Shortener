@@ -1,6 +1,6 @@
 
 import crypto from "crypto";
-import { loadLink, saveLinks } from "../models/shortener.model.js";
+import { getLinkByShortCode, loadLink, saveLinks } from "../models/shortener.model.js";
 
 
 
@@ -38,9 +38,12 @@ export const postURLshortener = async (req, res) => {
         }
 
         //! if not present
-        links[finalShortCode] = url;
+        // links[finalShortCode] = url;
+        // await saveLinks(links)
 
-        await saveLinks(links)
+        //! Mongodb code
+        await saveLinks({url,shortCode})
+
         return res.redirect("/");
 
 
@@ -55,13 +58,15 @@ export const postURLshortener = async (req, res) => {
 
 export const redirectToShortLink = async (req, res) => {
     try {
-        console.log(req.params.shortCode);
 
         const { shortCode } = req.params;
-        const links = await loadLink();
 
-        if (!links[shortCode]) return res.status(404).send("404 Error Occurred");
-        return res.redirect(links[shortCode]);
+        // const links = await loadLink();
+        
+        const link= await getLinkByShortCode(shortCode)
+        
+        if (!link) return res.status(404).send("404 Error Occurred");
+        return res.redirect(link.url);
 
     } catch (error) {
         console.error(error)
