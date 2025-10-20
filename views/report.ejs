@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report card</title>
+</head>
+
+<body>
+
+    <!--! include header.html which is in view folder, if other folder, we have to give path -->
+    <%- include('header') %>
+
+
+
+        <h1>Report card</h1>
+
+        <ul>
+            <% student.map((stud)=>{ %>
+                <li>
+                    <p> name: <%= stud.name %>
+                    </p>
+                    <p> Grade: <%= stud.grade %>
+                    </p>
+                    <p> Favorite Subject: <%= stud.favSub %>
+                    </p>
+                </li>
+
+                <% })%>
+
+
+        </ul>
+</body>
+
+</html>

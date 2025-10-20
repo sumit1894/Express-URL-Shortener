@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style.css">
+    <title>URL Shortener</title>
+</head>
+
+<body>
+    <div class="hero">
+        <div class="container">
+            <h1>URL Shortener</h1>
+            <form action="/" method="post">
+                <div>
+                    <label for="url">Enter URL:</label>
+                    <input type="url" name="url" id="url" required>
+                </div>
+                <div>
+                    <label for="shortCode">Enter shortCode:</label>
+                    <input type="text" name="shortCode" id="shortCode">
+                </div>
+                <button type="submit">Shorten</button>
+            </form>
+
+            <h2>Shortend URLs</h2>
+
+            <!-- const content = file.toString().replaceAll("{{shortend_url}}", Object.entries(links).map(
+            ([shortCode, url]) => {
+            return `<li><a href="/${shortCode}" target="_blank">${req.host}/${shortCode}</a>-${url} </li>`
+            }
+            ).join("")
+            );
+            return res.send(content) -->
+
+            <ul>
+                <% Object.entries(links).map(([shortCode, url])=> { %>
+                    <% const truncatedURL=url.length>=30? `${url.slice(0,30)}...`:url %>
+                    <li>
+                        <a href="/<%= shortCode %>" target="_blank">
+                            <%= hosts %>/<%= shortCode %>
+                        </a>
+                        -<%= truncatedURL %>
+                    </li>
+                    <% }) %>
+            </ul>
+        </div>
+    </div>
+
+</body>
+
+</html>
