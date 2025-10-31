@@ -34,6 +34,9 @@ export const saveLinks = async (links) => {
 */
 
 
+//! MongoDB
+
+
 import { dbClient } from "../config/db-client.js";
 import { env } from "../config/env.js";
 
@@ -55,5 +58,9 @@ export const saveLinks=async(link)=>{
 export const getLinkByShortCode=async(shortcode)=>{
     return await shortenerCollection.findOne({shortCode:shortcode})
 }
+
+
+
+
 
 

@@ -1,6 +1,7 @@
 
 import crypto from "crypto";
-import { getLinkByShortCode, loadLink, saveLinks } from "../models/shortener.model.js";
+// import { getLinkByShortCode, loadLink, saveLinks } from "../models/shortener.model.js";
+import { urls } from "../schema/url_schema.js";
 
 
 
@@ -11,9 +12,11 @@ export const getSortenerPage = async (req, res) => {
     try {
         //! no need to read because of res.render();
         // const file = await readFile(path.join("views", "index.html"));
-        const links = await loadLink()
+        // const links = await loadLink()
 
-        return res.render("index",{links,hosts:req.host});
+        const links = await urls.find(); //!mongoose
+
+        return res.render("index", { links, hosts: req.host });
 
 
     } catch (error) {
@@ -31,7 +34,8 @@ export const postURLshortener = async (req, res) => {
         const { url, shortCode } = req.body;
         const finalShortCode = shortCode || crypto.randomBytes(4).toString("hex");
 
-        const links = await loadLink();
+        // const links = await loadLink();
+        const links = await urls.find(); //!mongoose
 
         if (links[finalShortCode]) {
             return res.status(400).send("Sort code already exist. Pleased choose another.")
@@ -42,7 +46,9 @@ export const postURLshortener = async (req, res) => {
         // await saveLinks(links)
 
         //! Mongodb code
-        await saveLinks({url,shortCode})
+        // await saveLinks({url,shortCode})
+        await urls.create({ url, shortCode }) //!mongoose
+
 
         return res.redirect("/");
 
@@ -62,9 +68,10 @@ export const redirectToShortLink = async (req, res) => {
         const { shortCode } = req.params;
 
         // const links = await loadLink();
-        
-        const link= await getLinkByShortCode(shortCode)
-        
+
+        // const link = await getLinkByShortCode(shortCode)
+        const link = await urls.findOne({shortCode:shortCode})
+
         if (!link) return res.status(404).send("404 Error Occurred");
         return res.redirect(link.url);
 
