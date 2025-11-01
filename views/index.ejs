@@ -35,11 +35,11 @@
             return res.send(content) -->
 
             <ul>
-                <% links.map(({shortCode, url})=> { %>
+                <% links.map(({short_code, url})=> { %>
                     <% const truncatedURL=url.length>=30? `${url.slice(0,30)}...`:url %>
                     <li>
-                        <a href="/<%= shortCode %>" target="_blank">
-                            <%= hosts %>/<%= shortCode %>
+                        <a href="/<%= short_code %>" target="_blank">
+                            <%= hosts %>/<%= short_code %>
                         </a>
                         -<%= truncatedURL %>
                     </li>

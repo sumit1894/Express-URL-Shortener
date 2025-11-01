@@ -2,7 +2,7 @@
 import express from "express";
 import { env } from "./config/env.js";
 import { shortenedRoutes } from "./routes/shortenerRoutes.js";
-import { connectDB } from "./config/db-client.js";
+// import { connectDB } from "./config/db-client.js";
 
 const app = express();
 
@@ -28,7 +28,7 @@ app.use(shortenedRoutes);
 
 //todo Server create 
 try {
-    await connectDB();
+    // await connectDB();
     app.listen(env.PORT, () => {
         console.log(`Server running at http://localhost:${env.PORT}`);
     })

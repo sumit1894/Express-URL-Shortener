@@ -37,27 +37,56 @@ export const saveLinks = async (links) => {
 //! MongoDB
 
 
-import { dbClient } from "../config/db-client.js";
-import { env } from "../config/env.js";
+// import { dbClient } from "../config/db-client.js";
+// import { env } from "../config/env.js";
+import { db } from "../config/db-client.js";
 
-const db=dbClient.db(env.MONGODB_DATABASE_NAME);
-const shortenerCollection=db.collection("shorteners");
+// const db = dbClient.db(env.MONGODB_DATABASE_NAME);
+// const shortenerCollection = db.collection("shorteners");
 
 //! file reading 
-export const loadLink=async()=>{
-    return shortenerCollection.find().toArray()
+export const loadLink = async () => {
+    // return shortenerCollection.find().toArray() //! mongodb
+    //todo mySql
+    const [rows] = await db.execute('select * from short_links')
+    return rows;
 }
 
 //! file save to json
-export const saveLinks=async(link)=>{
-    return shortenerCollection.insertOne(link);   
+/*
+
+export const saveLinks = async (link) => {
+    // return shortenerCollection.insertOne(link);   //! mongodb
+    //todo mySql
+    const [result] = await db.execute("insert into short_links(short_code,url) values(?,?)",
+        ["", ""]
+    )
+    return result;
+}
+    */
+
+//! file save to json
+export const insertShortlink = async ({url,shortCode}) => {
+    // return shortenerCollection.insertOne(link);   //! mongodb
+    //todo mySql
+    const [result] = await db.execute("insert into short_links(short_code,url) values(?,?)",
+        [shortCode,url]
+    )
+    return result;
 }
 
 //! short-code checking
 
-export const getLinkByShortCode=async(shortcode)=>{
-    return await shortenerCollection.findOne({shortCode:shortcode})
-}
+export const getLinkByShortCode = async (shortcode) => {
+    // return await shortenerCollection.findOne({shortCode:shortcode}) //! mongodb
+    const [rows] = await db.execute(`select * from short_links where short_code=?`, [shortcode]);
+
+    if (rows.length > 0) {
+        return rows[0]
+    }else{
+        return null;
+    }
+};
 
 
 
