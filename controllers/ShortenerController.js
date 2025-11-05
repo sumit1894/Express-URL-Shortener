@@ -1,6 +1,8 @@
 
 import crypto from "crypto";
-import { getLinkByShortCode, insertShortlink, loadLink } from "../models/shortener.model.js";
+import { getLinkByShortCode, insertShortlink, loadLink } from "../services/shortener.services.js";
+// import { getLinkByShortCode, insertShortlink, loadLink } from "../models/shortener.model.js";
+
 
 
 
@@ -57,7 +59,7 @@ export const postURLshortener = async (req, res) => {
 
     } catch (error) {
         console.log(error)
-        return res.status(500).send("internal server Error hehe1")
+        return res.status(500).send("internal server Error file")
     }
 };
 

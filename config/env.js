@@ -14,10 +14,10 @@ export const env = z.object({
   // MONGODB_UTI: z.string(),
   //   MONGODB_DATABASE_NAME: z.string(),
 
-  DATABASE_HOST: z.string(),
-  DATABASE_USER: z.string(),
-  DATABASE_PASSWORD: z.string(),
-  DATABASE_NAME: z.string(),
+  // DATABASE_HOST: z.string(),
+  // DATABASE_USER: z.string(),
+  // DATABASE_PASSWORD: z.string(),
+  // DATABASE_NAME: z.string(),
 
 
 }).parse(process.env);
